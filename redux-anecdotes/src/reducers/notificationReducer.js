@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit' // Just a commnet
+import { useDispatch } from 'react-redux'
 
 const notificationSlice = createSlice({
   name: 'notification',
@@ -7,10 +8,15 @@ const notificationSlice = createSlice({
   
     notificationDrape(state, action) {
       return action.payload
+    },
+    
+    notificationClear(state, action) {
+      return null
     }
   
   }
 })
 
-export const { notificationDrape } = notificationSlice.actions
+export const { notificationDrape, notificationClear } =
+    notificationSlice.actions
 export default notificationSlice.reducer
