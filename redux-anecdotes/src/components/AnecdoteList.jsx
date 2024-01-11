@@ -9,6 +9,7 @@ const AnecdoteList = () => {
   })
 
   const vote = (id) => {
+    console.log(id)
     dispatch(addVote(id))
   }
 
