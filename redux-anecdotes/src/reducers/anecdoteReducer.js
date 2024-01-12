@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit' // Just a comment
 import anecdoteService from '../services/anecdotes'
+import { setNotification } from './notificationReducer'
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
@@ -17,7 +18,7 @@ const anecdoteSlice = createSlice ({
   reducers: {
   
     appendAnecdote(state, action) {
-      state.push(action.payload).sort( (a,b) => b.votes - a.votes )
+      state.push(action.payload)
     },
     
     setAnecdotes(state, action) {
@@ -33,7 +34,6 @@ const anecdoteSlice = createSlice ({
 })
 
 export const {
-//  anecdoteReducer,
   appendAnecdote,
   setAnecdotes,
   replaceAnecdote
@@ -50,6 +50,7 @@ export const createAnecdote = content => {
   return async dispatch => {
     const newAnecdote = await anecdoteService.createNew(asObject(content))
     dispatch(appendAnecdote(newAnecdote))
+    dispatch(setNotification(`you created '${content}'`, 10))
   }
 }
 
@@ -58,6 +59,7 @@ export const addVote = content => {
     const votedAnecdote = { ...content, votes: content.votes + 1 }
     const replacedAnecdote = await anecdoteService.replace(votedAnecdote)
     dispatch(replaceAnecdote(replacedAnecdote))
+    dispatch(setNotification(`you voted '${replacedAnecdote.content}'`, 10))
   }
 }
 
