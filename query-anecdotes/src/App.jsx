@@ -9,7 +9,7 @@ const App = () => {
 	const queryClient = useQueryClient()
 	const newVoteMutation = useMutation({
 		mutationFn: updateAnecdote,
-		onSuccess: () => {
+		onSuccess: (r) => {
 			queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
 		}
 	})
@@ -25,7 +25,6 @@ const App = () => {
 		queryKey: ['anecdotes'],
 		queryFn: () => axios.get('http://localhost:3001/anecdotes').then(res => res.data)
 	})
-	console.log(JSON.parse(JSON.stringify(result)))
 	if ( result.isError ) {
 		return <div>anecdote server not aviable due to problems in server</div>
 	}
