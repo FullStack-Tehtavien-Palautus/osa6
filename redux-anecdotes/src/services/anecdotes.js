@@ -12,4 +12,10 @@ const createNew = async (anecdote) => {
     return response.data
 }
 
-export default { getAll, createNew }
+const replace = async (anecdote) => {
+    await axios.delete(baseUrl+"/"+anecdote.id)
+    const response = await axios.post(baseUrl, anecdote)
+    return response.data
+}
+
+export default { getAll, createNew, replace }
